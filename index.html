@@ -27,7 +27,6 @@
     </head>
     <body>
         <video autoplay="true" id="webcam"></video>
-
         <script>
             var video = document.querySelector("#webcam");
 
@@ -43,6 +42,13 @@
                 console.log("not supported in this browser :()");
 
             }
+
+            // document.addEventListener("mousemove", function(event) {
+            //     var x = event.clientX / window.innerWidth * 100;
+            //     var y = event.clientY / window.innerHeight * 100;
+            //     video.style.transform = `translate(-${x}%, -${y}%)`;
+            // });
+
         </script>
     </body>
 </html>
