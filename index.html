@@ -1,11 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>web dance</title>
         <style>
-            body{}
-          
+       
+            body, html {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                /* overflow: hidden; */
+            }
+
+            #webcam {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                /* makes video full screen */
+                object-fit: cover;
+                opacity: 0.5;
+            }
         </style>
     </head>
     <body>
-</body>
+        <video autoplay="true" id="webcam"></video>
+
+        <script>
+            var video = document.querySelector("#webcam");
+
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function (stream) {
+                        video.srcObject = stream;
+                    })
+                    .catch(function (err) {
+                        console.log("sorry :( not working" + err);
+                    });
+            } else {
+                console.log("not supported in this browser :()");
+
+            }
+        </script>
+    </body>
+</html>
