@@ -22,6 +22,7 @@
                 /* makes video full screen */
                 object-fit: cover;
                 opacity: 0.5;
+                transition: transform 0.1s ease-out; /* Smooth transition for zoom effect */
             }
             .lens{
                 position: absolute;
@@ -33,6 +34,15 @@
                 box-shadow: 0 0 15px rgba(33, 32, 32, 0.6);
                 overflow: hidden; /* makes sure the zoomed-in effect doesn't overflow outside the lens */
             }
+            .lens-content {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-size: 200%; /* Makes image inside the lens zoomed in */
+                background-position: center;
+            }
         </style>
     </head>
     <body>
@@ -41,6 +51,8 @@
             <div class="lens-content"></div>
         </div>
         <script>
+
+            //webcam stuff
 var video = document.querySelector("#webcam");
 
 if (navigator.mediaDevices.getUserMedia) {
@@ -54,6 +66,7 @@ if (navigator.mediaDevices.getUserMedia) {
 } else {
     console.log("Webcam not supported in this browser :(");
 }
+
 
         </script>
     </body>
