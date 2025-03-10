@@ -6,7 +6,6 @@
         <link rel="shortcut icon" href="src/filmcamera.png">
         <title>web dance</title>
         <style>
-       
             body, html {
                 margin: 0;
                 padding: 0;
@@ -24,37 +23,41 @@
                 object-fit: cover;
                 opacity: 0.5;
             }
+            .lens{
+                position: absolute;
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                border: 5px solid rgba(0, 0, 0, 0.6); 
+                pointer-events: none;
+                box-shadow: 0 0 15px rgba(33, 32, 32, 0.6);
+                overflow: hidden; /* makes sure the zoomed-in effect doesn't overflow outside the lens */
+            }
         </style>
     </head>
     <body>
         <video autoplay="true" id="webcam"></video>
-        <img src="src/filmcamera.png" alt="film camera" id="filmcamera"> 
+        <div class="lens">
+            <div class="lens-content"></div>
+        </div>
         <script>
-            var video = document.querySelector("#webcam");
+var video = document.querySelector("#webcam");
 
-            if (navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: true })
-                    .then(function (stream) {
-                        video.srcObject = stream;
-                    })
-                    .catch(function (err) {
-                        console.log("sorry :( not working" + err);
-                    });
-            } else {
-                console.log("not supported in this browser :()");
-
-            }
-
-            // document.addEventListener("mousemove", function(event) {
-            //     var x = event.clientX / window.innerWidth * 100;
-            //     var y = event.clientY / window.innerHeight * 100;
-            //     video.style.transform = `translate(-${x}%, -${y}%)`;
-            // });
+if (navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+            video.srcObject = stream;
+        })
+        .catch(function (err) {
+            console.log("Sorry, video not working: " + err);
+        });
+} else {
+    console.log("Webcam not supported in this browser :(");
+}
 
         </script>
     </body>
 </html>
 
-<!-- sources
-film camera: https://pngtree.com/freepng/antique-old-fashion-film-camera-front-view-isolated-on-white-background_13020157.html 
--->
+<!-- sources -->
+<!-- film camera: https://pngtree.com/freepng/antique-old-fashion-film-camera-front-view-isolated-on-white-background_13020157.html -->
