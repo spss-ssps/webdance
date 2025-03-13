@@ -6,25 +6,37 @@ let output = document.getElementById('output');
 
 let tempbutton = document.querySelector('#tempbutton');
 
-tempbutton.addEventListener('click', (event) => { 
-    let cursorX = event.clientX
-    let cursorY = event.clientY;
- 
-    takeshot()});
+let cropSize;
+let cropX; 
+let cropY;
+
+tempbutton.addEventListener('click', (event) => { takeshot()});
 
 function takeshot() {
+    let rect = lens.getBoundingClientRect();
+    
+    let cursorX = event.clientX -rect.left;
+    let cursorY = event.clientY -rect.top;
+ 
+    let imgX = (cursorX / lens.width) * 200
+    let imgY = (cursorY / lens.height) * 100
 
-    let width= 200;
-    let height= 100;
+    let cropSize = 100;
+    let cropX = Math.max(0, imgX - cropSize / 2);
+    let cropY = Math.max(0, imgY - cropSize / 2);
+
+
+    // let width= 200;
+    // let height= 100;
 
     // console.log(width, height);
+    console.log(cropSize, cropX, cropY);
 
-
-    lens.getContext('2d').drawImage(video, 0, 0, width, height);
+    lens.getContext('2d').drawImage(video, cropX, cropY, cropSize, cropSize, 0, 0, lens.width, lens.height);
 
     let data = lens.toDataURL('image/png');
     output.style.background = `url('${data}') center/cover no-repeat`;
-    output.style.transform = "scale(5)";
+    output.style.transform = "scale(3)";
 }
 // function scaleLens() {
 //     let scale = 5;
