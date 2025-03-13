@@ -5,37 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="src/filmcamera.png">
     <title>web dance</title>
+    <script src=
+    "https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js">
+        </script>
     <style>
         body, html {
             background-color: #000;
             margin: 0;
             padding: 0;
             height: 100%;
+            width: 100%;
         }
 
-        #webcamCanvas {
+        #webcam {
+            display: none; 
             transform: scaleX(-1);
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            object-fit: cover;
         }
 
-        #snapshotCanvas {
+        #lens {
+            display: none;    
             position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 100px;
-            height: 100px;
+            color: black;
+            border: 10px solid black;
+            width:  50vw;
+            height: 50vh;
+            z-index: 10;
         }
+        #output {
+            transform: scaleX(-1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80vw;
+            height: 50vh;
+            z-index: 11;
+        }
+        #tempbutton {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 12;
+        }
+
     </style>
 </head>
 <body>
-    <canvas id="webcamCanvas"></canvas>
-    <canvas id="snapshotCanvas" width="100" height="100"></canvas>
-    <script src="webcam.js"></script>
+    <video id="webcam" autoplay></video>
+    <canvas id="lens"></canvas>
+    <div id="output"></div> 
+    <div id="tempbutton"></div>
 </body>
+<script src="webcam.js"></script>
+<script src="lens.js"></script>
 </html>
 
 <!-- sources -->
