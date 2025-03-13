@@ -37,15 +37,21 @@
             height: 50vh;
             z-index: 10;
         }
-        #output {
-            transform: scaleX(-1);
+        #outputContainer {
             position: absolute;
+            overflow: hidden;
             top: 0;
             left: 0;
-            width: 80vw;
-            height: 50vh;
+            width: 50%;
+            height: 50%;
             z-index: 11;
         }
+        #output {
+            transform: scaleX(-1);
+            width: 100%;
+            height: 100%;
+        }
+        
         #tempbutton {
             position: absolute;
             top: 0;
@@ -60,7 +66,9 @@
 <body>
     <video id="webcam" autoplay></video>
     <canvas id="lens"></canvas>
-    <div id="output"></div> 
+    <div id="outputContainer">
+        <div id="output"></div> 
+    </div>
     <div id="tempbutton"></div>
 </body>
 <script src="webcam.js"></script>
