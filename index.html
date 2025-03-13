@@ -50,12 +50,11 @@
             transform: scaleX(-1);
             width: 100%;
             height: 100%;
-            opacity: 0.5;
-            transition: opacity 0.5s ease;
+            opacity: 0.1;
+            transition: opacity 0.5s ease-in-out;
         }
 
-
-        #output:hover {
+        #outputContainer:hover #output {
             opacity: 1;
         }
         
@@ -74,7 +73,7 @@
     <video id="webcam" autoplay></video>
     <canvas id="lens"></canvas>
     <div id="outputContainer">
-        <div id="output"></div> 
+        <canvas id="output"></canvas> 
     </div>
     <div id="tempbutton"></div>
 </body>
