@@ -13,16 +13,6 @@
             height: 100%;
         }
 
-        #webcam {
-            transform: scaleX(-1);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.8;
-        }
         #webcamCanvas {
             transform: scaleX(-1);
             position: absolute;
@@ -32,48 +22,27 @@
             height: 100%;
         }
 
-        .lens {
+        /* Optional - small canvas to show saved snapshots */
+        #snapshotCanvas {
             position: absolute;
-            border: 3px solid #000;
-            border-radius: 50%;
-            cursor: none;
+            top: 10px;
+            left: 10px;
             width: 100px;
             height: 100px;
-            z-index: 10;
         }
-
-        .lens-content {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            border-radius: 50%;
-            pointer-events: none; /* To avoid interfering with lens movements */
-        }
-
-        .trace {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: rgba(255, 0, 0, 0.5);
-            pointer-events: none;
-        }
-
-        /* Optional - small canvas to show saved snapshots */
     </style>
 </head>
 <body>
+    <!-- Full-screen canvas for webcam feed and magnifying effect -->
     <canvas id="webcamCanvas"></canvas>
-    <video autoplay="true" id="webcam"></video>
-    <div class="lens" id="lens">
-        <div class="lens-content"></div>
-    </div>
 
     <!-- This is where the captured area will be drawn (saved snapshot) -->
     <canvas id="snapshotCanvas" width="100" height="100"></canvas>
+
     <script src="lens.js"></script>
     <script src="webcam.js"></script>
+</body>
+</html>
 
 <!-- sources -->
 <!-- film camera: https://pngtree.com/freepng/antique-old-fashion-film-camera-front-view-isolated-on-white-background_13020157.html -->

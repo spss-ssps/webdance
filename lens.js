@@ -1,57 +1,57 @@
-function trances(videoElement, zoom) {
-  var lens = document.getElementById("lens");
-  var lensContent = lens.querySelector(".lens-content");
-  var traces = [];
-  var snapshotCanvas = document.getElementById("snapshotCanvas");
-  var snapshotCtx = snapshotCanvas.getContext("2d");
+// Grab the canvas element and its context for drawing
+const webcamCanvas = document.getElementById('webcamCanvas');
+const webcamCtx = webcamCanvas.getContext('2d');
+const snapshotCanvas = document.getElementById('snapshotCanvas');
+const snapshotCtx = snapshotCanvas.getContext('2d');
 
-  // Update lens position and magnification effect
-  lens.addEventListener("mousemove", function(event) {
-      var lensSize = lens.offsetWidth;
-      var lensX = event.offsetX - lensSize / 2;
-      var lensY = event.offsetY - lensSize / 2;
-      lens.style.left = lensX + "px";
-      lens.style.top = lensY + "px";
+let webcamStream;
+let traces = [];
+const zoom = 5;  // Magnifying effect zoom level
 
-      // Create the magnification effect
-      lensContent.style.backgroundImage = `url(${videoElement.srcObject})`;
-      lensContent.style.backgroundSize = `${videoElement.videoWidth * zoom}px ${videoElement.videoHeight * zoom}px`;
-      lensContent.style.backgroundPosition = `-${lensX * zoom}px -${lensY * zoom}px`;
+// Set the canvas size to the full screen
+webcamCanvas.width = window.innerWidth;
+webcamCanvas.height = window.innerHeight;
 
-      // Track past traces (store position and timestamp)
-      traces.push({ x: lensX + lensSize / 2, y: lensY + lensSize / 2, time: Date.now() });
-      
-      // Keep traces within a visible time frame (e.g., 2000ms)
-      traces = traces.filter(trace => Date.now() - trace.time < 2000);
-      
-      // Draw traces (red circles)
-      traces.forEach(function(trace) {
-          var traceElement = document.createElement("div");
-          traceElement.className = "trace";
-          traceElement.style.left = `${trace.x - 25}px`;
-          traceElement.style.top = `${trace.y - 25}px`;
-          document.body.appendChild(traceElement);
-          setTimeout(function() {
-              traceElement.remove();
-          }, 2000); // Remove trace after 2 seconds
-      });
-  });
+// Access webcam stream
+navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+        webcamStream = stream;
+        const video = document.createElement('video');
+        video.srcObject = stream;
+        video.play();
 
-  // Capture and save image on click
-  lens.addEventListener("click", function(event) {
-      var lensSize = lens.offsetWidth;
-      var lensX = event.offsetX - lensSize / 2;
-      var lensY = event.offsetY - lensSize / 2;
+        // Once the video is playing, start drawing it to the canvas
+        video.addEventListener('play', () => {
+            drawWebcamFeed(video);
+        });
+    })
+    .catch(function (err) {
+        console.error("Error accessing webcam: ", err);
+    });
 
-      // Draw the selected area to the snapshot canvas
-      snapshotCtx.clearRect(0, 0, snapshotCanvas.width, snapshotCanvas.height);
-      snapshotCtx.drawImage(
-          videoElement,
-          lensX, lensY, lensSize, lensSize, // Extract part of the video
-          0, 0, snapshotCanvas.width, snapshotCanvas.height // Draw to snapshot canvas
-      );
-  });
+// Function to draw webcam feed on the canvas
+function drawWebcamFeed(video) {
+    function draw() {
+        webcamCtx.drawImage(video, 0, 0, webcamCanvas.width, webcamCanvas.height);
+        drawTraces();  // Draw traces on top of the webcam feed
+        requestAnimationFrame(draw);  // Keep drawing at 60 frames per second
+    }
+    draw();
 }
 
-// Call the magnify function and zoom level (e.g., 5x)
-trances(document.querySelector("#webcam"), 5);
+// Function to handle mouse movement and magnifying effect
+webcamCanvas.addEventListener('mousemove', function (event) {
+    const mouseX = event.offsetX;
+    const mouseY = event.offsetY;
+
+    // Draw magnifying effect by scaling the area under the cursor
+    const lensSize = 100;
+    webcamCtx.save();
+    webcamCtx.beginPath();
+    webcamCtx.arc(mouseX, mouseY, lensSize, 0, Math.PI * 2);
+    webcamCtx.clip();
+
+    webcamCtx.drawImage(
+        webcamCanvas,
+        mouseX - lensSize / 2, mouseY - lensSize / 2, lensSize, lensSize,
+        mouseX - lensSize / 2
