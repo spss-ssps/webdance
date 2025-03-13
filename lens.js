@@ -6,17 +6,19 @@ let output = document.getElementById('output');
 
 let tempbutton = document.querySelector('#tempbutton');
 
-tempbutton.addEventListener('click', () => {takeshot()});
+tempbutton.addEventListener('click', (event) => { 
+    let cursorX = event.clientX
+    let cursorY = event.clientY;
+ 
+    takeshot()});
 
 function takeshot() {
 
     let width= 200;
     let height= 100;
 
-    // let width= style.width;
-    // let height= style.height;
-    
-    console.log(width, height);
+    // console.log(width, height);
+
 
     lens.getContext('2d').drawImage(video, 0, 0, width, height);
 
@@ -29,10 +31,3 @@ function takeshot() {
 //     lens.width = video.videoWidth / scale;
 //     lens.height = video.videoHeight / scale;
 // }
-
-document.onmousemove = function (e) {
-    let cursorX = e.pageX
-    let cursorY = e.pageY;
-
-    console.log(cursorX, cursorY);
-}
