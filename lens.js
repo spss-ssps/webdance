@@ -1,60 +1,57 @@
-function magnify(imgID, zoom) {
-    var img, glass, w, h, bw;
-    img = document.getElementById(imgID);
-  
-    /* Create magnifier glass: */
-    glass = document.createElement("DIV");
-    glass.setAttribute("class", "img-magnifier-glass");
-  
-    /* Insert magnifier glass: */
-    img.parentElement.insertBefore(glass, img);
-  
-    /* Set background properties for the magnifier glass: */
-    glass.style.backgroundImage = "url('" + img.src + "')";
-    glass.style.backgroundRepeat = "no-repeat";
-    glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
-    bw = 3;
-    w = glass.offsetWidth / 2;
-    h = glass.offsetHeight / 2;
-  
-    /* Execute a function when someone moves the magnifier glass over the image: */
-    glass.addEventListener("mousemove", moveMagnifier);
-    img.addEventListener("mousemove", moveMagnifier);
-  
-    /*and also for touch screens:*/
-    glass.addEventListener("touchmove", moveMagnifier);
-    img.addEventListener("touchmove", moveMagnifier);
-    function moveMagnifier(e) {
-      var pos, x, y;
-      /* Prevent any other actions that may occur when moving over the image */
-      e.preventDefault();
-      /* Get the cursor's x and y positions: */
-      pos = getCursorPos(e);
-      x = pos.x;
-      y = pos.y;
-      /* Prevent the magnifier glass from being positioned outside the image: */
-      if (x > img.width - (w / zoom)) {x = img.width - (w / zoom);}
-      if (x < w / zoom) {x = w / zoom;}
-      if (y > img.height - (h / zoom)) {y = img.height - (h / zoom);}
-      if (y < h / zoom) {y = h / zoom;}
-      /* Set the position of the magnifier glass: */
-      glass.style.left = (x - w) + "px";
-      glass.style.top = (y - h) + "px";
-      /* Display what the magnifier glass "sees": */
-      glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
-    }
-  
-    function getCursorPos(e) {
-      var a, x = 0, y = 0;
-      e = e || window.event;
-      /* Get the x and y positions of the image: */
-      a = img.getBoundingClientRect();
-      /* Calculate the cursor's x and y coordinates, relative to the image: */
-      x = e.pageX - a.left;
-      y = e.pageY - a.top;
-      /* Consider any page scrolling: */
-      x = x - window.pageXOffset;
-      y = y - window.pageYOffset;
-      return {x : x, y : y};
-    }
-  }
+function trances(videoElement, zoom) {
+  var lens = document.getElementById("lens");
+  var lensContent = lens.querySelector(".lens-content");
+  var traces = [];
+  var snapshotCanvas = document.getElementById("snapshotCanvas");
+  var snapshotCtx = snapshotCanvas.getContext("2d");
+
+  // Update lens position and magnification effect
+  lens.addEventListener("mousemove", function(event) {
+      var lensSize = lens.offsetWidth;
+      var lensX = event.offsetX - lensSize / 2;
+      var lensY = event.offsetY - lensSize / 2;
+      lens.style.left = lensX + "px";
+      lens.style.top = lensY + "px";
+
+      // Create the magnification effect
+      lensContent.style.backgroundImage = `url(${videoElement.srcObject})`;
+      lensContent.style.backgroundSize = `${videoElement.videoWidth * zoom}px ${videoElement.videoHeight * zoom}px`;
+      lensContent.style.backgroundPosition = `-${lensX * zoom}px -${lensY * zoom}px`;
+
+      // Track past traces (store position and timestamp)
+      traces.push({ x: lensX + lensSize / 2, y: lensY + lensSize / 2, time: Date.now() });
+      
+      // Keep traces within a visible time frame (e.g., 2000ms)
+      traces = traces.filter(trace => Date.now() - trace.time < 2000);
+      
+      // Draw traces (red circles)
+      traces.forEach(function(trace) {
+          var traceElement = document.createElement("div");
+          traceElement.className = "trace";
+          traceElement.style.left = `${trace.x - 25}px`;
+          traceElement.style.top = `${trace.y - 25}px`;
+          document.body.appendChild(traceElement);
+          setTimeout(function() {
+              traceElement.remove();
+          }, 2000); // Remove trace after 2 seconds
+      });
+  });
+
+  // Capture and save image on click
+  lens.addEventListener("click", function(event) {
+      var lensSize = lens.offsetWidth;
+      var lensX = event.offsetX - lensSize / 2;
+      var lensY = event.offsetY - lensSize / 2;
+
+      // Draw the selected area to the snapshot canvas
+      snapshotCtx.clearRect(0, 0, snapshotCanvas.width, snapshotCanvas.height);
+      snapshotCtx.drawImage(
+          videoElement,
+          lensX, lensY, lensSize, lensSize, // Extract part of the video
+          0, 0, snapshotCanvas.width, snapshotCanvas.height // Draw to snapshot canvas
+      );
+  });
+}
+
+// Call the magnify function and zoom level (e.g., 5x)
+trances(document.querySelector("#webcam"), 5);

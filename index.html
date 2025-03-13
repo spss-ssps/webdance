@@ -1,59 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="src/filmcamera.png">
-        <title>web dance</title>
-        <style>
-            body, html {
-                margin: 0;
-                padding: 0;
-                height: 100%;
-                /* overflow: hidden; */
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="src/filmcamera.png">
+    <title>Web Dance</title>
+    <style>
+        body, html {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
 
-            #webcam {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                /* makes video full screen */
-                object-fit: cover;
-                opacity: 0.5;
-                transition: transform 0.1s ease-out; /* Smooth transition for zoom effect */
-            }
-            .lens{
-                position: absolute;
-                width: 150px;
-                height: 150px;
-                border-radius: 50%;
-                border: 5px solid rgba(0, 0, 0, 0.6); 
-                pointer-events: none;
-                box-shadow: 0 0 15px rgba(33, 32, 32, 0.6);
-                overflow: hidden; /* makes sure the zoomed-in effect doesn't overflow outside the lens */
-            }
-            .lens-content {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-size: 200%; /* Makes image inside the lens zoomed in */
-                background-position: center;
-            }
-        </style>
-    </head>
-    <body>
-        <video autoplay="true" id="webcam"></video>
-        <div class="lens">
-            <div class="lens-content"></div>
-        </div>
-        <script src="webcam.js"></script>
-        <script src="lens.js"></script>
-    </body>
-</html>
+        #webcam {
+            transform: scaleX(-1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+        #webcamCanvas {
+            transform: scaleX(-1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .lens {
+            position: absolute;
+            border: 3px solid #000;
+            border-radius: 50%;
+            cursor: none;
+            width: 100px;
+            height: 100px;
+            z-index: 10;
+        }
+
+        .lens-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 50%;
+            pointer-events: none; /* To avoid interfering with lens movements */
+        }
+
+        .trace {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 0, 0, 0.5);
+            pointer-events: none;
+        }
+
+        /* Optional - small canvas to show saved snapshots */
+    </style>
+</head>
+<body>
+    <canvas id="webcamCanvas"></canvas>
+    <video autoplay="true" id="webcam"></video>
+    <div class="lens" id="lens">
+        <div class="lens-content"></div>
+    </div>
+
+    <!-- This is where the captured area will be drawn (saved snapshot) -->
+    <canvas id="snapshotCanvas" width="100" height="100"></canvas>
+    <script src="lens.js"></script>
+    <script src="webcam.js"></script>
 
 <!-- sources -->
 <!-- film camera: https://pngtree.com/freepng/antique-old-fashion-film-camera-front-view-isolated-on-white-background_13020157.html -->
