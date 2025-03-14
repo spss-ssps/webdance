@@ -59,14 +59,3 @@ function takeshot(event) {
     }
     
 }
-
-
-
-// // Additional debug - check mouse position
-// document.addEventListener('mousemove', (event) => {
-//     let rect = lens.getBoundingClientRect();
-//     let cursorX = event.clientX - rect.left;
-//     let cursorY = event.clientY - rect.top;
-
-//     console.log("Cursor X:", cursorX, "Cursor Y:", cursorY);
-// });
