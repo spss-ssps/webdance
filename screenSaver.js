@@ -1,4 +1,8 @@
 document.getElementById('triggerImage').addEventListener('click', function() {
+    //play sound when clicked
+    document.getElementById('cameraSound').play();
+
+    //get the lens element
     var lensContainer = document.getElementById('lens');
     
     // get the current opacity and grayscale values

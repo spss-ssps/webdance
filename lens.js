@@ -21,6 +21,7 @@ function takeshot(event) {
 
     // let imgX = (randomX / lens.width) * webcam.videoWidth;
     // let imgY = (randomY/ lens.height) * webcam.videoHeight;
+    
     let imgX = (cursorX / lens.width) * webcam.videoWidth;
     let imgY = (cursorY / lens.height) * webcam.videoHeight;
     
