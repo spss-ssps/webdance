@@ -35,23 +35,24 @@ function takeshot(event) {
 
         ctx.drawImage(webcam, cropX, cropY, cropSize, cropSize, randomX, randomY, cropSize, cropSize);
 
-        let centerX = window.innerWidth / 2;
-        let centerY = window.innerHeight / 2;
-        let distanceX = Math.abs(cursorX - centerX);
-        let distanceY = Math.abs(cursorY - centerY);
-        let maxDistanceX = centerX;
-        let maxDistanceY = centerY;
+        //center interaction
+        // let centerX = window.innerWidth / 2;
+        // let centerY = window.innerHeight / 2;
+        // let distanceX = Math.abs(cursorX - centerX);
+        // let distanceY = Math.abs(cursorY - centerY);
+        // let maxDistanceX = centerX;
+        // let maxDistanceY = centerY;
 
-        let opacity = (distanceX / maxDistanceX);
-        let grayscale = 50 + (1 - (distanceY / maxDistanceY)) * 50;
+        // let opacity = (distanceX / maxDistanceX);
+        // let grayscale = 50 + (1 - (distanceY / maxDistanceY)) * 50;
 
-        lens.style.opacity = opacity;
-        lens.style.filter = `grayscale(${grayscale}%)`;
+        // lens.style.opacity = opacity;
+        // lens.style.filter = `grayscale(${grayscale}%)`;
 
 
         //original
-        // lens.style.opacity = mapRange(cursorX, 0, window.innerWidth, 0, 1);
-        // lens.style.filter = `grayscale(${mapRange(cursorY, 0, window.innerHeight, 50, 100)}%)`;
+        lens.style.opacity = mapRange(cursorX, 0, window.innerWidth, 0, 1);
+        lens.style.filter = `grayscale(${mapRange(cursorY, 0, window.innerHeight, 50, 100)}%)`;
 
 
         // output.style.background = `url('${data}') center/cover no-repeat`;
