@@ -36,6 +36,7 @@
             width:  50vw;
             height: 50vh;
             z-index: 10;
+            pointer-events: none;
         }
         #outputContainer {
             position: absolute;
@@ -45,26 +46,27 @@
             width: 50%;
             height: 50%;
             z-index: 11;
+            border-radius: 50%;  /* Makes the container circular */
         }
         #output {
-            transform: scaleX(-1);
-            width: 100%;
-            height: 100%;
-            opacity: 0.1;
-            transition: opacity 0.5s ease-in-out;
+        width: 100%;
+        height: 100%;
+        opacity: 0.2;
+        transition: opacity 0.5s ease;
+        border-radius: 50%;
+        z-index: 12;
         }
 
-        #outputContainer:hover #output {
+        #outputContainer:hover {
             opacity: 1;
         }
-        
         #tempbutton {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 12;
+            z-index: 13;
         }
 
     </style>
@@ -73,7 +75,7 @@
     <video id="webcam" autoplay></video>
     <canvas id="lens"></canvas>
     <div id="outputContainer">
-        <canvas id="output"></canvas> 
+        <div id="output"></div> 
     </div>
     <div id="tempbutton"></div>
 </body>
