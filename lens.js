@@ -15,11 +15,9 @@ tempbutton.addEventListener('click', (event) => { takeshot(event) });
 function takeshot(event) {
     let cursorX = event.clientX
     let cursorY = event.clientY
- 
 
     let randomX = Math.random() * (lens.width - cropSize);
     let randomY = Math.random() * (lens.height - cropSize);
-
 
     let imgX = (randomX / lens.width) * webcam.videoWidth;
     let imgY = (randomY / lens.height) * webcam.videoHeight;
@@ -32,11 +30,16 @@ function takeshot(event) {
 
         ctx.drawImage(webcam, cropX, cropY, cropSize, cropSize, randomX, randomY, cropSize, cropSize);
 
-        let data = lens.toDataURL('image/png');
+        lens.style.opacity = mapRange(cursorX, 0, window.innerWidth, 0, 1);
+        lens.style.filter = `grayscale(${mapRange(cursorY, 0, window.innerHeight, 50, 100)}%)`;
+        
         // output.style.background = `url('${data}') center/cover no-repeat`;
         // output.style.transform = "scale(3)";
 
-        lens.style.background = `url('${data}') center/cover no-repeat`;
+        let newCtx = lens.getContext('2d');
+        if (newCtx) {
+            newCtx.drawImage(webcam, cropX, cropY, cropSize, cropSize, cursorX - cropSize / 2, cursorY - cropSize / 2, cropSize, cropSize);
+        }
     } else {
         console.log('Canvas context not available');
     }
@@ -50,6 +53,11 @@ function takeshot(event) {
         output.style.background = `url('${data}') center/cover no-repeat`;
         output.style.transform = "scale(3)";
     }
+
+    function mapRange(value, inMin, inMax, outMin, outMax) {
+        return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    }
+    
 }
 
 
