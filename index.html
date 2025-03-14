@@ -6,8 +6,8 @@
     <link rel="shortcut icon" href="src/filmcamera.png">
     <title>web dance</title>
     
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.7/dist/html2canvas.min.js"></script>
+
     <style>
         body, html {
             background-color: #000;
@@ -64,7 +64,7 @@
             height: 100%;
             z-index: 13;
         }
-        #cameraCapture {
+        #triggerImage {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -73,7 +73,7 @@
             height: auto;
             z-index: 14;
         }
-        #cameraCapture {
+        #triggerImage {
             cursor: pointer;
         }
 
@@ -86,11 +86,12 @@
         <div id="output"></div> 
     </div>
     <div id="tempbutton"></div>
-    <img id="cameraCapture" src="src/filmcamera.png" alt="Camera Capture">
+    <img id="triggerImage" src="src/filmcamera.png" alt="triggerImage">
 </body>
 <script src="webcam.js"></script>
 <script src="lens.js"></script>
 <script src="screenSaver.js"></script>
+
 </html>
 
 <!-- sources -->

@@ -13,8 +13,8 @@ webcam.addEventListener('play', () => {
 tempbutton.addEventListener('click', (event) => { takeshot(event) });
 
 function takeshot(event) {
-    let cursorX = event.clientX
-    let cursorY = event.clientY
+    let cursorX = event.clientX;
+    let cursorY = event.clientY;
 
     let randomX = Math.random() * (lens.width - cropSize);
     let randomY = Math.random() * (lens.height - cropSize);
