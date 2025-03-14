@@ -29,16 +29,18 @@
         }
 
         #lens {
-            display: none;    
+            /* display: none;     */
+            transform: scaleX(-1);
             position: absolute;
             color: black;
             border: 10px solid black;
-            width:  50vw;
-            height: 50vh;
+            width:  100%;
+            height: 100%;
             z-index: 10;
+            filter: grayscale(100%);
             pointer-events: none;
         }
-        #outputContainer {
+        /* #outputContainer {
             position: absolute;
             overflow: hidden;
             top: 50%;
@@ -61,7 +63,7 @@
         width: 100%;
         height: 100%;
         z-index: 12;
-        }
+        } */
         #tempbutton {
             position: absolute;
             top: 0;
