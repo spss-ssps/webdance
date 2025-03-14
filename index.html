@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="src/filmcamera.png">
     <title>web dance</title>
-    <script src=
-    "https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js">
-        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
+    
     <style>
         body, html {
             background-color: #000;
@@ -64,6 +64,18 @@
             height: 100%;
             z-index: 13;
         }
+        #cameraCapture {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 3vw;
+            height: auto;
+            z-index: 14;
+        }
+        #cameraCapture {
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -74,9 +86,11 @@
         <div id="output"></div> 
     </div>
     <div id="tempbutton"></div>
+    <img id="cameraCapture" src="src/filmcamera.png" alt="Camera Capture">
 </body>
 <script src="webcam.js"></script>
 <script src="lens.js"></script>
+<script src="screenSaver.js"></script>
 </html>
 
 <!-- sources -->
