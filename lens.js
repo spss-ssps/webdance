@@ -15,36 +15,29 @@ tempbutton.addEventListener('click', (event) => { takeshot(event)});
 function takeshot() {
     let rect = lens.getBoundingClientRect();
     
-    let cursorX = event.clientX - rect.left;
-    let cursorY = event.clientY - rect.top;
+    let cursorX = event.clientX -rect.left;
+    let cursorY = event.clientY -rect.top;
  
-    let imgX = (cursorX / lens.width) * 200;
-    let imgY = (cursorY / lens.height) * 100;
+    let imgX = (cursorX / lens.width) * 200
+    let imgY = (cursorY / lens.height) * 100
 
     let cropSize = 100;
     let cropX = Math.max(0, imgX - cropSize / 2);
     let cropY = Math.max(0, imgY - cropSize / 2);
 
-    let drawX = (lens.width - cropSize) / 2;
-    let drawY = (lens.height - cropSize) / 2;
 
-    let context = lens.getContext('2d');
-    context.drawImage(video, cropX, cropY, cropSize, cropSize, drawX, drawY, cropSize, cropSize);
+    // let width= 200;
+    // let height= 100;
 
-    let imageData = context.getImageData(0, 0, lens.width, lens.height);
-    let data = imageData.data;
+    // console.log(width, height);
+    // console.log(cropSize, cropX, cropY);
 
-    for (let i = 0; i < data.length; i += 4) {
-        let avg = (data[i] + data[i + 1] + data[i + 2]) / 2;
-        data[i] = avg; // red
-        data[i + 1] = avg; // green
-        data[i + 2] = avg; // blue
-    }
+    //original
+    lens.getContext('2d').drawImage(video, cropX, cropY, cropSize, cropSize, 0, 0, lens.width, lens.height);
+    
 
-    context.putImageData(imageData, 0, 0);
-
-    let dataURL = lens.toDataURL('image/png');
-    output.style.background = `url('${dataURL}') center/cover no-repeat`;
+    let data = lens.toDataURL('image/png');
+    output.style.background = `url('${data}') center/cover no-repeat`;
     output.style.transform = "scale(3)";
 }
 
