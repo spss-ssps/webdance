@@ -12,7 +12,7 @@ let cropY;
 
 tempbutton.addEventListener('click', (event) => { takeshot(event)});
 
-function takeshot() {
+function takeshot(event) {
     let rect = lens.getBoundingClientRect();
     
     let cursorX = event.clientX -rect.left;
@@ -35,7 +35,6 @@ function takeshot() {
     //original
     lens.getContext('2d').drawImage(video, cropX, cropY, cropSize, cropSize, 0, 0, lens.width, lens.height);
     
-
     let data = lens.toDataURL('image/png');
     output.style.background = `url('${data}') center/cover no-repeat`;
     output.style.transform = "scale(3)";
