@@ -11,6 +11,6 @@ if (navigator.mediaDevices.getUserMedia) {
             console.log("sorry, webcam not working :( " + err);
         });
 } else {
-    console.log("webcam not supported S:(");
+    console.log("webcam not supported :(");
 }
 
