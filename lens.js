@@ -2,7 +2,7 @@ let lens = document.getElementById('lens');
 let output = document.getElementById('output');
 let tempbutton = document.querySelector('#tempbutton');
 let webcam = document.getElementById('webcam');
-let cropSize = 60;
+let cropSize = 70;
 let cropX, cropY;
 
 webcam.addEventListener('play', () => {
@@ -19,20 +19,41 @@ function takeshot(event) {
     let randomX = Math.random() * (lens.width - cropSize);
     let randomY = Math.random() * (lens.height - cropSize);
 
-    let imgX = (randomX / lens.width) * webcam.videoWidth;
-    let imgY = (randomY/ lens.height) * webcam.videoHeight;
+    // let imgX = (randomX / lens.width) * webcam.videoWidth;
+    // let imgY = (randomY/ lens.height) * webcam.videoHeight;
+    let imgX = (cursorX / lens.width) * webcam.videoWidth;
+    let imgY = (cursorY / lens.height) * webcam.videoHeight;
+    
+    let randomImgX = (randomX / lens.width) * webcam.videoWidth;
+    let randomImgY = (randomY / lens.height) * webcam.videoHeight;
 
-    cropX = Math.max(0, Math.min(imgX - cropSize / 2, webcam.videoWidth - cropSize));
-    cropY = Math.max(0, Math.min(imgY - cropSize / 2, webcam.videoHeight - cropSize));
+    cropX = Math.max(0, Math.min(randomImgX - cropSize / 2, webcam.videoWidth - cropSize));
+    cropY = Math.max(0, Math.min(randomImgY - cropSize / 2, webcam.videoHeight - cropSize));
 
     let ctx = lens.getContext('2d');
     if (ctx) {
 
         ctx.drawImage(webcam, cropX, cropY, cropSize, cropSize, randomX, randomY, cropSize, cropSize);
 
-        lens.style.opacity = mapRange(cursorX, 0, window.innerWidth, 0, 1);
-        lens.style.filter = `grayscale(${mapRange(cursorY, 0, window.innerHeight, 50, 100)}%)`;
-        
+        let centerX = window.innerWidth / 2;
+        let centerY = window.innerHeight / 2;
+        let distanceX = Math.abs(cursorX - centerX);
+        let distanceY = Math.abs(cursorY - centerY);
+        let maxDistanceX = centerX;
+        let maxDistanceY = centerY;
+
+        let opacity = (distanceX / maxDistanceX);
+        let grayscale = 50 + (1 - (distanceY / maxDistanceY)) * 50;
+
+        lens.style.opacity = opacity;
+        lens.style.filter = `grayscale(${grayscale}%)`;
+
+
+        //original
+        // lens.style.opacity = mapRange(cursorX, 0, window.innerWidth, 0, 1);
+        // lens.style.filter = `grayscale(${mapRange(cursorY, 0, window.innerHeight, 50, 100)}%)`;
+
+
         // output.style.background = `url('${data}') center/cover no-repeat`;
         // output.style.transform = "scale(3)";
 
