@@ -72,8 +72,9 @@
             width: 3vw;
             height: auto;
             z-index: 14;
+            cursor: pointer;
         }
-        #triggerImage {
+        #triggerImage:active {
             cursor: pointer;
         }
 
@@ -87,6 +88,14 @@
     </div>
     <div id="tempbutton"></div>
     <img id="triggerImage" src="src/filmcamera.png" alt="triggerImage">
+    <audio id="cameraSound" src="src/camerashutter.mp3"></audio>
+
+    <!-- trigger sound -->
+<script>
+        document.getElementById('triggerImage').addEventListener('click', function() {
+        document.getElementById('cameraSound').play();
+    });
+</script>
 </body>
 <script src="webcam.js"></script>
 <script src="lens.js"></script>
