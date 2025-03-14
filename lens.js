@@ -20,7 +20,7 @@ function takeshot(event) {
     let randomY = Math.random() * (lens.height - cropSize);
 
     let imgX = (randomX / lens.width) * webcam.videoWidth;
-    let imgY = (randomY / lens.height) * webcam.videoHeight;
+    let imgY = (randomY/ lens.height) * webcam.videoHeight;
 
     cropX = Math.max(0, Math.min(imgX - cropSize / 2, webcam.videoWidth - cropSize));
     cropY = Math.max(0, Math.min(imgY - cropSize / 2, webcam.videoHeight - cropSize));
