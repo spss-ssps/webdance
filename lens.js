@@ -2,7 +2,7 @@ let lens = document.getElementById('lens');
 let output = document.getElementById('output');
 let tempbutton = document.querySelector('#tempbutton');
 let webcam = document.getElementById('webcam');
-let cropSize = 70;
+let cropSize = 60;
 let cropX, cropY;
 
 webcam.addEventListener('play', () => {
@@ -44,7 +44,7 @@ function takeshot(event) {
     let ctx2 = lens.getContext('2d');
     if (ctx2) {
 
-        ctx2.drawImage(webcam, cropX, cropY, cropSize, cropSize, cursorX, cursorY, cropSize, cropSize);
+        ctx2.drawImage(webcam, cropX, cropY, cropSize, cropSize, cursorX - cropSize / 2, cursorY - cropSize / 2, cropSize, cropSize);
 
         let data = lens.toDataURL('image/png');
         output.style.background = `url('${data}') center/cover no-repeat`;
