@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="src/filmcamera.png">
     <title>web dance</title>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.7/dist/html2canvas.min.js"></script>
 
     <style>
-        body, html {
+        body,
+        html {
             background-color: #000;
             margin: 0;
             padding: 0;
@@ -18,7 +20,7 @@
         }
 
         #webcam {
-            display: none; 
+            display: none;
             transform: scaleX(-1);
             position: absolute;
             top: 0;
@@ -38,6 +40,7 @@
             opacity: 0.3;
             filter: grayscale(100%);
         }
+
         #outputContainer {
             position: absolute;
             overflow: hidden;
@@ -51,11 +54,13 @@
             filter: grayscale(100%);
             opacity: 0.5;
         }
+
         #output {
-        width: 50%;
-        height: 50%;
-        z-index: 12;
+            width: 50%;
+            height: 50%;
+            z-index: 12;
         }
+
         #tempbutton {
             position: absolute;
             top: 0;
@@ -64,6 +69,7 @@
             height: 100%;
             z-index: 13;
         }
+
         #triggerImage {
             position: absolute;
             top: 50%;
@@ -74,17 +80,18 @@
             z-index: 14;
             cursor: pointer;
         }
+
         #triggerImage:active {
             cursor: pointer;
         }
-
     </style>
 </head>
+
 <body>
     <video id="webcam" autoplay></video>
     <canvas id="lens"></canvas>
     <div id="outputContainer">
-        <div id="output"></div> 
+        <div id="output"></div>
     </div>
     <div id="tempbutton"></div>
     <img id="triggerImage" src="src/filmcamera.png" alt="triggerImage">
@@ -94,6 +101,7 @@
 <script src="webcam.js"></script>
 <script src="lens.js"></script>
 <script src="screenSaver.js"></script>
+
 </html>
 
 <!-- sources -->
